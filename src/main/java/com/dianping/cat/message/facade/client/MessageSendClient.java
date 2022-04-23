@@ -14,7 +14,7 @@ public class MessageSendClient {
 
     protected ThreadPoolExecutor threadExecutor;
 
-    private ConsistentHashChannelPool pool;
+    protected ConsistentHashChannelPool pool;
 
     public MessageSendClient(ServerListLoader serverListLoader, ThreadPoolExecutor threadExecutor) {
         ChannelHealthChecker healthChecker = channel -> {

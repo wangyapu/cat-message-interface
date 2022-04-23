@@ -8,6 +8,10 @@ service ChannelHealthCheckService {
     rpc HealthCheck (ChannelHealthCheckRequest) returns (ChannelHealthCheckResponse) {}
 }
 
+service CatMessageCallService {
+    rpc OnMessage (CatMessageRequest) returns (CatMessageResponse) {}
+}
+
 message ChannelHealthCheckRequest {
     string client_ip = 1;
 }
@@ -26,5 +30,11 @@ message CatMessageRequest {
     repeated CatMessageData data_list = 2;
     int64 timestamp = 3;
 }
+
+message CatMessageResponse {
+    bool success = 1;
+    string message = 2;
+}
+
 
 

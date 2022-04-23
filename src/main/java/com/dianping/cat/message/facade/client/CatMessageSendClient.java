@@ -1,12 +1,16 @@
 package com.dianping.cat.message.facade.client;
 
 import com.dianping.cat.message.facade.dto.CatMessageDTO;
+import com.dianping.cat.message.facade.proto.CatMessageCallServiceGrpc;
 import com.dianping.cat.message.facade.proto.CatMessageData;
 import com.dianping.cat.message.facade.proto.CatMessageRequest;
+import com.dianping.cat.message.facade.proto.CatMessageResponse;
+import com.dianping.cat.message.facade.rpc.GRpcCall;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class CatMessageSendClient extends MessageSendClient {
 
@@ -19,15 +23,19 @@ public class CatMessageSendClient extends MessageSendClient {
             return;
         }
 
-        CatMessageRequest requests = buildCatMessageRequest(dataList);
+        CatMessageRequest request = buildCatMessageRequest(dataList);
 
-        threadExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
+        GRpcCall<CatMessageRequest, CatMessageResponse> call = new GRpcCall<>(pool, hashKey, request);
+        call.asyncCall((rpcStateChannel, catMessageRequest) -> CatMessageCallServiceGrpc.newFutureStub(rpcStateChannel.getChannel())
+                .withDeadlineAfter(5, TimeUnit.SECONDS).onMessage(request));
 
+        threadExecutor.execute(() -> {
+            try {
+                call.getWithRetry();
+            } catch (Exception e) {
+                // ignore
             }
         });
-
     }
 
     private CatMessageRequest buildCatMessageRequest(List<CatMessageDTO> dataList) {
@@ -37,10 +45,7 @@ public class CatMessageSendClient extends MessageSendClient {
             calObs.add(data);
         }
 
-        CatMessageRequest request = CatMessageRequest.newBuilder().addAllDataList(calObs).build();
-
-        return null;
+        return CatMessageRequest.newBuilder().addAllDataList(calObs).build();
     }
-
 
 }

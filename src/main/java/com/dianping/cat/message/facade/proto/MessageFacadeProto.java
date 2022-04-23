@@ -34,6 +34,11 @@ public final class MessageFacadeProto {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_CatMessageRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_CatMessageResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_CatMessageResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -49,11 +54,15 @@ public final class MessageFacadeProto {
       "timestamp\030\002 \001(\003\" \n\016CatMessageData\022\016\n\006per" +
       "iod\030\001 \001(\003\"Z\n\021CatMessageRequest\022\016\n\006period" +
       "\030\001 \001(\003\022\"\n\tdata_list\030\002 \003(\0132\017.CatMessageDa" +
-      "ta\022\021\n\ttimestamp\030\003 \001(\0032e\n\031ChannelHealthCh" +
-      "eckService\022H\n\013HealthCheck\022\032.ChannelHealt" +
-      "hCheckRequest\032\033.ChannelHealthCheckRespon" +
-      "se\"\000B=\n%com.dianping.cat.message.facade." +
-      "protoB\022MessageFacadeProtoP\001b\006proto3"
+      "ta\022\021\n\ttimestamp\030\003 \001(\003\"6\n\022CatMessageRespo" +
+      "nse\022\017\n\007success\030\001 \001(\010\022\017\n\007message\030\002 \001(\t2e\n" +
+      "\031ChannelHealthCheckService\022H\n\013HealthChec" +
+      "k\022\032.ChannelHealthCheckRequest\032\033.ChannelH" +
+      "ealthCheckResponse\"\0002O\n\025CatMessageCallSe" +
+      "rvice\0226\n\tOnMessage\022\022.CatMessageRequest\032\023" +
+      ".CatMessageResponse\"\000B=\n%com.dianping.ca" +
+      "t.message.facade.protoB\022MessageFacadePro" +
+      "toP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -91,6 +100,12 @@ public final class MessageFacadeProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_CatMessageRequest_descriptor,
         new java.lang.String[] { "Period", "DataList", "Timestamp", });
+    internal_static_CatMessageResponse_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_CatMessageResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_CatMessageResponse_descriptor,
+        new java.lang.String[] { "Success", "Message", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

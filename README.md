@@ -1,6 +1,6 @@
-# cat-message-facade
+# cat-message-interface
 
-cat-message-facade is used for message communication.
+cat-message-interface is used for message communication.
 
 It offers a variety of features:
 

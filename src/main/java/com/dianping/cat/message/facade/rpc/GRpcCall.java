@@ -76,6 +76,15 @@ public class GRpcCall<REQUEST extends Message, RESPONSE> {
         }
     }
 
+    public RESPONSE getWithRetry() {
+        try {
+            return get();
+        } catch (Exception e) {
+            doAsyncCall();
+            return get();
+        }
+    }
+
     private StatusRuntimeException formatRpcException(Throwable t) {
         Throwable cause = t;
         while (cause != null) {
