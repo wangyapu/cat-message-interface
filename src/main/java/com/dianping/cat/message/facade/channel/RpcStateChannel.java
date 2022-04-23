@@ -2,6 +2,7 @@ package com.dianping.cat.message.facade.channel;
 
 import io.grpc.ManagedChannel;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class RpcStateChannel {
@@ -13,6 +14,8 @@ public class RpcStateChannel {
     private volatile boolean healthy = true;
 
     private final AtomicLong hit = new AtomicLong(0);
+
+    private final AtomicInteger fail = new AtomicInteger(0);
 
     public RpcStateChannel(String address, ManagedChannel channel) {
         this.address = address;
@@ -38,4 +41,9 @@ public class RpcStateChannel {
     public AtomicLong getHit() {
         return hit;
     }
+
+    public AtomicInteger getFail() {
+        return fail;
+    }
+
 }

@@ -28,6 +28,7 @@ public class MessageSendClient {
             return ChannelHealthCheckServiceGrpc.newBlockingStub(channel).healthCheck(request).getEnable();
         };
 
+        this.pool = new ConsistentHashChannelPool(serverListLoader, healthChecker);
         this.threadExecutor = threadExecutor;
     }
 
@@ -44,6 +45,12 @@ public class MessageSendClient {
             }
         }
         return instance;
+    }
+
+    public void shutDown() {
+        if (this.pool != null) {
+            this.pool.close();
+        }
     }
 
 }

@@ -26,6 +26,8 @@ public class GRpcCall<REQUEST extends Message, RESPONSE> {
 
     private BiFunction<RpcStateChannel, REQUEST, Future<RESPONSE>> call;
 
+    public static final int FAIL_LIMIT = 5;
+
     public GRpcCall(ConsistentHashChannelPool channelPool, String hashKey, REQUEST request) {
         this.channelPool = channelPool;
         this.hashKey = hashKey;
@@ -62,7 +64,10 @@ public class GRpcCall<REQUEST extends Message, RESPONSE> {
                 }
 
                 if (e.getStatus().getCode() == Status.Code.DEADLINE_EXCEEDED || e.getStatus().getCode() == Status.Code.RESOURCE_EXHAUSTED) {
-                    // TODO
+                    int fail = this.rpcStateChannel.getFail().incrementAndGet();
+                    if (fail > FAIL_LIMIT) {
+                        this.channelPool.disableChannel(this.rpcStateChannel);
+                    }
                 }
             }
 

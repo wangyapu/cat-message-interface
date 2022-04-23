@@ -60,7 +60,6 @@ public class ConsistentHashChannelPool {
     private void doChannelStateCheck() {
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate(this::manageChannel, 0, 30000, TimeUnit.MILLISECONDS);
-
     }
 
     private void manageChannel() {
@@ -109,7 +108,7 @@ public class ConsistentHashChannelPool {
         List<String> toDel = new ArrayList<>();
         this.channels.forEach((server, rpcStateChannel) -> {
             if (!serverAddresses.contains(server)) {
-                // TODO remove router
+                this.router.removeNode(server);
                 toDel.add(server);
             }
         });
