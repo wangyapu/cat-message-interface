@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.dianping.cat.message.facade.proto";
+option java_outer_classname = "MessageFacadeProto";
+
+service ChannelHealthCheckService {
+    rpc HealthCheck (ChannelHealthCheckRequest) returns (ChannelHealthCheckResponse) {}
+}
+
+message ChannelHealthCheckRequest {
+    string client_ip = 1;
+}
+
+message ChannelHealthCheckResponse {
+    bool enable = 1;
+    int64 timestamp = 2;
+}
+
+message CatMessageData {
+    int64 period = 1;
+}
+
+message CatMessageRequest {
+    int64 period = 1;
+    repeated CatMessageData data_list = 2;
+    int64 timestamp = 3;
+}
+
+
